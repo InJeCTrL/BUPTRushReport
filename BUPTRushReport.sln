@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUPTRushReport", "BUPTRushReport\BUPTRushReport.csproj", "{2525D8A2-51BE-49A6-9D9A-A1C7B88D2959}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2525D8A2-51BE-49A6-9D9A-A1C7B88D2959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2525D8A2-51BE-49A6-9D9A-A1C7B88D2959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2525D8A2-51BE-49A6-9D9A-A1C7B88D2959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2525D8A2-51BE-49A6-9D9A-A1C7B88D2959}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {537DBCC5-57F2-4B98-AA8F-14A1FC013C80}
+	EndGlobalSection
+EndGlobal
