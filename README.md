@@ -2,10 +2,6 @@
 
 > 北京邮电大学疫情防控通自动填报工具，包含晨检（每日填报）、午晚检
 
-## 我想说的
-
-我是20级新生，目前尚未入学只需要每日填报，尚不明确午晚检的具体时间段和规则，所以程序还只是在测试阶段。如果有已在校并且了解午晚检政策、规则的同学想帮助我改进程序，欢迎邮件告诉我哦，真的非常感谢！
-
 ## 界面示意
 
 ![View](./view.png)
@@ -70,6 +66,10 @@
 4. 点击提交信息，查看网络选项卡(Network)中URL为：```https://app.bupt.edu.cn/xisuncov/wap/open-report/save```的POST请求内容，这个字符串就是午晚检Payload
 
    ![Firefox示例](./sample_Payload2_Firefox.png)
+
+## 致谢
+
+非常感谢[**Dong-Guan-Saohuang-Dadui**](https://github.com/Dong-Guan-Saohuang-Dadui)提供晨午晚检政策！
 
 ## 敬告
 
