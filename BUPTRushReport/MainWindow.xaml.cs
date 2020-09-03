@@ -139,23 +139,23 @@ namespace BUPTRushReport
         private void SetTime_Moon(bool TodayComplete = false)
         {
             DateTime Today = DateTime.Now;
-            // 当日17点后或当日Rush过, 设定次日15点10填报
+            // 当日17点后或当日Rush过, 设定次日14点10填报
             if (Today.Hour >= 17 || TodayComplete)
             {
                 DateTime Tomorrow = Today.AddDays(1);
                 t_Moon.Change((int)(new DateTime(Tomorrow.Year, Tomorrow.Month, Tomorrow.Day,
-                                    15, 10, 0) - Today).TotalMilliseconds, Timeout.Infinite);
+                                    14, 10, 0) - Today).TotalMilliseconds, Timeout.Infinite);
             }
             // 在当天填报时间范围内, 立刻填报
-            else if (Today.Hour >= 14 && Today.Hour < 17)
+            else if (Today.Hour >= 12 && Today.Hour < 17)
             {
                 t_Moon.Change(0, Timeout.Infinite);
             }
-            // 当日14点前, 设定当日15点10填报
+            // 当日12点前, 设定当日14点10填报
             else
             {
                 t_Moon.Change((int)(new DateTime(Today.Year, Today.Month, Today.Day,
-                    15, 10, 0) - Today).TotalMilliseconds, Timeout.Infinite);
+                    14, 10, 0) - Today).TotalMilliseconds, Timeout.Infinite);
             }
         }
         /// <summary>
@@ -165,23 +165,23 @@ namespace BUPTRushReport
         private void SetTime_Night(bool TodayComplete = false)
         {
             DateTime Today = DateTime.Now;
-            // 当日22点后或当日Rush过, 设定次日19点50填报
-            if (Today.Hour >= 22 || TodayComplete)
+            // 当日21点后或当日Rush过, 设定次日19点20填报
+            if (Today.Hour >= 21 || TodayComplete)
             {
                 DateTime Tomorrow = Today.AddDays(1);
                 t_Night.Change((int)(new DateTime(Tomorrow.Year, Tomorrow.Month, Tomorrow.Day,
-                                    19, 50, 0) - Today).TotalMilliseconds, Timeout.Infinite);
+                                    19, 20, 0) - Today).TotalMilliseconds, Timeout.Infinite);
             }
             // 在当天填报时间范围内, 立刻填报
-            else if (Today.Hour >= 19 && Today.Hour < 22)
+            else if (Today.Hour >= 18 && Today.Hour < 21)
             {
                 t_Night.Change(0, Timeout.Infinite);
             }
-            // 当日19点前, 设定当日19点50填报
+            // 当日18点前, 设定当日19点20填报
             else
             {
                 t_Night.Change((int)(new DateTime(Today.Year, Today.Month, Today.Day,
-                    19, 50, 0) - Today).TotalMilliseconds, Timeout.Infinite);
+                    19, 20, 0) - Today).TotalMilliseconds, Timeout.Infinite);
             }
         }
         /// <summary>
