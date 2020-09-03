@@ -40,7 +40,8 @@
                 <DataGridTextColumn Header="午晚检Payload" Binding="{Binding Payload2}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="按列表顺序，每天6:10自动晨检" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
+        <Label Content="按列表顺序，每天6:10自动晨检，14:10自动午检，19:20自动晚检" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
         <Button Content="导出" Margin="0,10,10,0" HorizontalAlignment="Right" Width="121" Height="33" VerticalAlignment="Top" Click="Button_Click"/>
+        <Label Content="勾选自动午检或自动晚检才会在指定时间自动填报午检或晚检信息！" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" Foreground="#FFD85555"/>
     </Grid>
 </Window>
