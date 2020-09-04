@@ -8,10 +8,10 @@
         Title="DailyRush" Height="375.201" Width="711.5" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="RushOnce" Content="手动一遍晨检+午/晚检" Margin="0,10,144,0" Click="RushOne_Click" HorizontalAlignment="Right" Width="149" Height="33" VerticalAlignment="Top"/>
-        <DataGrid x:Name="UserGrid" Margin="10,48,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableColumnVirtualization="True" RowEditEnding="UserGrid_RowEditEnding">
+        <DataGrid x:Name="UserGrid" Margin="10,48,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableColumnVirtualization="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding userid}"></DataGridTextColumn>
-                <DataGridTextColumn Header="密码" Binding="{Binding userpwd}"></DataGridTextColumn>
+                <DataGridTextColumn FontFamily="MS Outlook" Header="密码" Binding="{Binding userpwd}"></DataGridTextColumn>
                 <DataGridTextColumn Header="晨检状态" Binding="{Binding LatestResult_Morning, Mode=OneWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="午检状态" Binding="{Binding LatestResult_Moon, Mode=OneWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="晚检状态" Binding="{Binding LatestResult_Night, Mode=OneWay}"></DataGridTextColumn>
