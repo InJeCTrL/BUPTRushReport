@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Xml.Serialization;
 
 namespace BUPTRushReport
@@ -192,6 +194,15 @@ namespace BUPTRushReport
         private void RushOne_Click(object sender, RoutedEventArgs e)
         {
             RushList(DateTime.Now, 0);
+            int hour_now = DateTime.Now.Hour;
+            if (hour_now >= 12 && hour_now < 17)
+            {
+                RushList(DateTime.Now, 1);
+            }
+            else if (hour_now >= 18 && hour_now < 21)
+            {
+                RushList(DateTime.Now, 2);
+            }
         }
         /// <summary>
         /// 导出列表到文件
@@ -200,15 +211,12 @@ namespace BUPTRushReport
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
             using (FileStream fs = new FileStream("userlist.xml", FileMode.Create))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<User>));
                 xmlSerializer.Serialize(fs, UserList);
                 MessageBox.Show("导出完成");
             }
-
         }
-
     }
 }
