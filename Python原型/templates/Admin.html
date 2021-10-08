@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>AdminView</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui-v2.5.7/css/layui.css" />
+	</head>
+	<body style="background-color: azure;">
+		<script src="https://www.layuicdn.com/layui-v2.5.7/layui.js"></script>
+		<div style="padding-bottom: 10px;">
+			GUID
+			<input class="layui-input" style="width: 100%;height: 30px;" type="text" id="new_guid" /><br />
+			isAdmin
+			<input class="layui-checkbox" type="checkbox" id="new_isAdmin" />
+			<button style="margin-top: 20px;" id="submit_adduser" class="layui-btn layui-btn layui-btn-fluid">新增</button>
+		</div>
+		<table class="layui-hide" id="statuslist" lay-filter="statuslist"></table>
+		<script type="text/html" id="tool">
+			<div class="layui-btn-container">
+				<button class="layui-btn layui-btn-sm" lay-event="flash">Flash</button>
+			</div>
+		</script>
+		<script type="text/html" id="bartools">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove">Remove</a>
+		</script>
+		<script>
+			var _guid = "{{GUID}}";
+			layui.use(['layer', 'element', 'form', 'layedit', 'laydate', 'table'], function(){
+				var layer = layui.layer
+				,$ = layui.$
+				,element = layui.element
+				,layedit = layui.layedit
+				,laydate = layui.laydate
+				,table = layui.table;
+				$("#submit_adduser").bind('click', function(){
+					let new_guid = $("#new_guid").val();
+					let new_isAdmin = $("#new_isAdmin").prop("checked");
+					$.ajax({
+						type: "post",
+						url: "./api/users/" + _guid,
+						data: {
+							id: new_guid, isAdmin: new_isAdmin
+							},
+						success: function(data){
+							showdata();
+						}
+					});
+				});
+				function showdata()
+				{
+					$.ajax({
+						type: "get",
+						url: "./api/users/" + _guid,
+						success: function(data){
+							if (data["success"] == 0){
+								table.render({
+									elem: '#statuslist'
+									,toolbar: '#tool'
+									,cols: [[
+										{field:'guid', title: 'GUID'}
+										,{field:'lastTime', title: '最近一次事件时间'}
+										,{
+											field:'result', title: '执行结果',
+											templet: function(d){
+												return d.result === 0 ? "<div>正常</div>" : "<div>不正常</div>";
+											}
+										}
+										,{
+											field:'message', title: '消息',
+											templet: function(d){
+												return d.message;
+											}
+										}
+										,{
+											field:'active', title: '是否激活',
+											templet: function(d){
+												return d.active === 1 ? "<div>已激活</div>" : "<div>未激活</div>";
+											}
+										}
+										,{
+											field:'isAdmin', title: '是否管理员',
+											templet: function(d){
+												return d.isAdmin === 1 ? "<div>是</div>" : "<div>否</div>";
+											}
+										}
+										,{field:'handle', title: 'Ctrl', minWidth: 150, toolbar: '#bartools'},
+									]]
+									,data: data["data"]
+									,limit: data["data"].length
+								});
+							}
+						}
+					});
+				}
+				table.on('toolbar(statuslist)', function(obj){
+					switch (obj.event){
+						case 'flash':
+							showdata();
+							break;
+					}
+				});
+				table.on('tool(statuslist)', function(obj){
+					let guid = obj.data.guid;
+					switch(obj.event){
+						case 'remove':
+							$.ajax({
+								type: "post",
+								url: "./api/users/remove/" + _guid,
+								data: {id: guid},
+								success: function(data){
+									if (data["success"] == 0){
+										layer.msg("Remove!");
+										showdata();
+									}
+								},
+							});
+						break;
+					}
+				});
+				$(document).ready(showdata);
+			});			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>注册</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui-v2.5.7/css/layui.css" />
+	</head>
+	<style>
+		html,
+		body {
+			height: 100%;
+		}
+
+		.content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+		}
+
+		.input-box {
+			padding: 20px;
+			background-color: rgba(193, 255, 253, 0.5);
+			border-radius: 10px;
+		}
+
+		.input-block {
+			padding-bottom: 10px;
+		}
+	</style>
+	<script src="https://cdn.bootcdn.net/ajax/libs/layui/2.6.8/layui.min.js"></script>
+	<body>
+		<div class="content">
+			<div class="input-box">
+				<form class="layui-form">
+					<div id="userpwdBlock">
+						<div class="input-block">
+							<input name="username" class="layui-input" type="text" placeholder="请输入用户名"
+								autocomplete="off">
+						</div>
+						<div class="input-block">
+							<input name="password" class="layui-input" type="password" placeholder="请输入密码"
+								autocomplete="off">
+						</div>
+					</div>
+					<div id="cookieBlock" class="layui-form-item" style="display: none;">
+						<div class="input-block">
+							<input name="cookie" class="layui-input" type="tel" autocomplete="off"
+								placeholder="请输入Cookie">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="input-block">
+							验证方式：
+						</div>
+						<div class="input-block">
+							<input id="usePWD" name="userchk" title="用户名密码" type="radio" lay-filter="userchk" checked=""
+								value="usePWD">
+							<input id="useCookie" name="userchk" title="用户Cookie" type="radio" lay-filter="userchk"
+								value="useCookie">
+						</div>
+					</div>
+				</form>
+				<div id="submitBlock" class="layui-form-item">
+					<button id="submitBtn" class="layui-btn layui-btn-fluid">确认注册</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var _guid = "{{GUID}}";
+		layui.use(['element', 'form', 'jquery'], function() {
+			var form = layui.form,
+				element = layui.element,
+				$ = layui.$;
+
+			form.on('radio(userchk)', function(data) {
+				if (data.value == "usePWD") {
+					$("#userpwdBlock").css("display", "block");
+					$("#cookieBlock").css("display", "none");
+				} else {
+					$("#userpwdBlock").css("display", "none");
+					$("#cookieBlock").css("display", "block");
+				}
+			});
+			$("#submitBtn").click(function() {
+				$.ajax({
+					type: "post",
+					url: "./api/user/" + _guid,
+					data: {
+						username: $("input[name=username]").val(),
+						password: $("input[name=password]").val(),
+						cookie: $("input[name=cookie]").val(),
+						userchk: $("input[name=userchk]").val()
+					},
+					success: function(data) {
+						if (data["success"] == 0) {
+							alert("注册成功");
+						} else {
+							alert("注册失败");
+						}
+						location.reload();
+					},
+				});
+			});
+		});
+	</script>
+</html>

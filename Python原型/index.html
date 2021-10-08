@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Simple Bing Search</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui-v2.5.7/css/layui.css" />
+	</head>
+	<style>
+		.box{
+			height: 300px;
+			width: 300px;
+			border: 2px solid;
+			box-shadow: 2px 2px 15px aquamarine;
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			padding: 10px;
+		}
+	</style>
+	<body style="background-color: beige;">
+		<script src="https://www.layuicdn.com/layui-v2.5.7/layui.js"></script>
+		<div class="box">
+			<label>Search what you want: </label>
+			<br />
+			<input type="text" id="content" name="search" required lay-verify="required" placeholder="Bing" autocomplete="off" class="layui-input">
+			<br />
+			<input type="button" id="search" class="layui-btn layui-btn-fluid" value="Search Now!" />
+		</div>
+	</body>
+	<script>
+		layui.use(['layer', 'element', 'form', 'layedit', 'laydate', 'table'], function(){
+			var layer = layui.layer
+			,$ = layui.$
+			,element = layui.element
+			,layedit = layui.layedit
+			,laydate = layui.laydate
+			,table = layui.table;
+			$('#search').bind('click', function(){
+				$(location).attr('href', $('#content').val());
+			});
+		});
+	</script>
+</html>
