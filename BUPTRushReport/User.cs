@@ -16,11 +16,13 @@ namespace BUPTRushReport
             userid = "学号";
             userpwd = "密码";
             Cookies = "";
+            AutoMorning = false;
             AutoMoon = false;
             AutoNight = false;
             Skip = false;
             Payload1 = "";
             Payload2 = "";
+            LatestResult_Daily = "";
             LatestResult_Morning = "";
             LatestResult_Moon = "";
             LatestResult_Night = "";
@@ -45,7 +47,7 @@ namespace BUPTRushReport
         /// 验证网站、账号并尝试获取Cookies
         /// </summary>
         /// <param name="DayTime">执行时间</param>
-        /// <param name="type">填报类型(早: 0, 午: 1, 晚: 2)</param>
+        /// <param name="type">填报类型(每日: 0,早: 3 ,午: 1, 晚: 2 )</param>
         /// <returns>
         /// 登录成功: true, 并设置Cookies;
         /// 登录失败: false, 并设置LatestResult
@@ -82,13 +84,16 @@ namespace BUPTRushReport
                                     switch (type)
                                     {
                                         case 0:
-                                            LatestResult_Morning = DayTime + reply["m"].ToString();
+                                            LatestResult_Daily = DayTime + reply["m"].ToString();
                                             break;
                                         case 1:
                                             LatestResult_Moon = DayTime + reply["m"].ToString();
                                             break;
                                         case 2:
                                             LatestResult_Night = DayTime + reply["m"].ToString();
+                                            break;
+                                        case 3:
+                                            LatestResult_Morning = DayTime + reply["m"].ToString();
                                             break;
                                         default:
                                             break;
@@ -110,13 +115,16 @@ namespace BUPTRushReport
                 switch (type)
                 {
                     case 0:
-                        LatestResult_Morning = DayTime + "网站异常";
+                        LatestResult_Daily = DayTime + "网站异常";
                         break;
                     case 1:
                         LatestResult_Moon = DayTime + "网站异常";
                         break;
                     case 2:
                         LatestResult_Night = DayTime + "网站异常";
+                        break;
+                    case 3:
+                        LatestResult_Morning = DayTime + "网站异常";
                         break;
                     default:
                         break;
@@ -134,7 +142,7 @@ namespace BUPTRushReport
         /// <summary>
         /// 检查当日某时段是否已填报
         /// </summary>
-        /// <param name="type">填报类型(早: 0, 午: 1, 晚: 2)</param>
+        /// <param name="type">填报类型(每日: 0,早: 3 ,午: 1, 晚: 2 )</param>
         /// <returns>
         /// 已填报: true;
         /// 未填报: false
@@ -143,12 +151,12 @@ namespace BUPTRushReport
         {
             bool flag = false;
             string checkURL = "";
-            // 晨检
+            // 每日填报
             if (type == 0)
             {
                 checkURL = "https://app.bupt.edu.cn/ncov/wap/default/index";
             }
-            // 午晚检
+            // 晨午晚检
             else
             {
                 checkURL = "https://app.bupt.edu.cn/xisuncov/wap/open-report/index";
@@ -163,7 +171,7 @@ namespace BUPTRushReport
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         page_Input = reader.ReadToEnd();
-                        // 晨检
+                        // 每日填报
                         if (type == 0)
                         {
                             if (page_Input.IndexOf("hasFlag: '1'") != -1)
@@ -171,7 +179,7 @@ namespace BUPTRushReport
                                 flag = true;
                             }
                         }
-                        // 午晚检
+                        // 晨午晚检
                         else
                         {
                             if (page_Input.IndexOf("\"realonly\":true") != -1)
@@ -192,27 +200,27 @@ namespace BUPTRushReport
         /// 提交填报信息
         /// </summary>
         /// <param name="time">执行时间</param>
-        /// <param name="type">填报类型(早: 0, 午: 1, 晚: 2)</param>
+        /// <param name="type">填报类型(每日: 0,早: 3 ,午: 1, 晚: 2 )</param>
         public void Submit(DateTime time, int type)
         {
             string DayTime = time.Year.ToString() + "." +
                                 time.Month.ToString() + "." +
                                 time.Day.ToString() + " ";
             if (!Skip && 
-                ((type == 1 && AutoMoon) || (type == 2 && AutoNight) || type == 0) && 
+                ((type == 1 && AutoMoon) || (type == 2 && AutoNight) || (type == 3 && AutoMorning) || type == 0) && 
                 Verify(DayTime, type))
             {
                 if (CheckSubmitted(type) == false)
                 {
                     string submitURL = "";
                     byte[] Payload = { };
-                    // 晨检
+                    // 每日填报
                     if (type == 0)
                     {
                         submitURL = "https://app.bupt.edu.cn/ncov/wap/default/save";
                         Payload = Encoding.UTF8.GetBytes(Payload1);
                     }
-                    // 午晚检
+                    // 晨午晚检
                     else
                     {
                         submitURL = "https://app.bupt.edu.cn/xisuncov/wap/open-report/save";
@@ -247,13 +255,16 @@ namespace BUPTRushReport
                     switch (type)
                     {
                         case 0:
-                            LatestResult_Morning = DayTime + twiceChk;
+                            LatestResult_Daily = DayTime + twiceChk;
                             break;
                         case 1:
                             LatestResult_Moon = DayTime + twiceChk;
                             break;
                         case 2:
                             LatestResult_Night = DayTime + twiceChk;
+                            break;
+                        case 3:
+                            LatestResult_Morning = DayTime + twiceChk;
                             break;
                         default:
                             break;
@@ -264,7 +275,7 @@ namespace BUPTRushReport
                     switch (type)
                     {
                         case 0:
-                            LatestResult_Morning = DayTime + "已填报, 无需重复提交";
+                            LatestResult_Daily = DayTime + "已填报, 无需重复提交";
                             break;
                         case 1:
                             LatestResult_Moon = DayTime + "已填报, 无需重复提交";
@@ -272,12 +283,19 @@ namespace BUPTRushReport
                         case 2:
                             LatestResult_Night = DayTime + "已填报, 无需重复提交";
                             break;
+                        case 3:
+                            LatestResult_Morning = DayTime + "已填报, 无需重复提交";
+                            break;
                         default:
                             break;
                     }
                 }
             }
         }
+        /// <summary>
+        /// 是否自动晨检
+        /// </summary>
+        public bool AutoMorning { get; set; }
         /// <summary>
         /// 是否自动午检
         /// </summary>
@@ -291,13 +309,32 @@ namespace BUPTRushReport
         /// </summary>
         public bool Skip { get; set; }
         /// <summary>
-        /// 晨检Payload
+        /// 每日填报Payload
         /// </summary>
         public string Payload1 { get; set; }
         /// <summary>
-        /// 午晚检Payload
+        /// 晨午晚检Payload
         /// </summary>
         public string Payload2 { get; set; }
+        /// <summary>
+        /// 每日填报执行结果
+        /// </summary>
+        private string _LatestResult_Daily;
+        public string LatestResult_Daily
+        {
+            get
+            {
+                return _LatestResult_Daily;
+            }
+            set
+            {
+                _LatestResult_Daily = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("LatestResult_Daily"));
+                }
+            }
+        }
         /// <summary>
         /// 晨检执行结果
         /// </summary>
