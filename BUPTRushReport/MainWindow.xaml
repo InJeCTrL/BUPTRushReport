@@ -5,43 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BUPTRushReport"
         mc:Ignorable="d"
-        Title="DailyRush" Height="375.201" Width="711.5" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Button x:Name="RushOnce" Content="手动一遍晨检+午/晚检" Margin="0,10,144,0" Click="RushOne_Click" HorizontalAlignment="Right" Width="149" Height="33" VerticalAlignment="Top"/>
-        <DataGrid x:Name="UserGrid" Margin="10,48,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableColumnVirtualization="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding userid}"></DataGridTextColumn>
-                <DataGridTextColumn FontFamily="MS Outlook" Header="密码" Binding="{Binding userpwd}"></DataGridTextColumn>
-                <DataGridTextColumn Header="晨检状态" Binding="{Binding LatestResult_Morning, Mode=OneWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="午检状态" Binding="{Binding LatestResult_Moon, Mode=OneWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="晚检状态" Binding="{Binding LatestResult_Night, Mode=OneWay}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="自动午检">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding AutoMoon, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="自动晚检">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding AutoNight, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="暂停">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Skip, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="晨检Payload" Binding="{Binding Payload1}"></DataGridTextColumn>
-                <DataGridTextColumn Header="午晚检Payload" Binding="{Binding Payload2}"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Label Content="按列表顺序，每天6:10自动晨检，14:10自动午检，19:20自动晚检" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
-        <Button Content="导出" Margin="0,10,10,0" HorizontalAlignment="Right" Width="121" Height="33" VerticalAlignment="Top" Click="Button_Click"/>
-        <Label Content="勾选自动午检或自动晚检才会在指定时间自动填报午检或晚检信息！" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" Foreground="#FFD85555"/>
-    </Grid>
+        Title="DailyRush" Height="300" Width="1000" WindowStartupLocation="CenterScreen" FontSize="13">
+	<Grid>
+		<Button x:Name="RushOnce" Content="手动一遍每日填报+晨/午/晚检" Margin="0,10,112,0" Click="RushOne_Click" HorizontalAlignment="Right" Width="205" Height="33" VerticalAlignment="Top"/>
+		<DataGrid x:Name="UserGrid" Margin="10,57,10,10" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableColumnVirtualization="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ID" Binding="{Binding userid}"></DataGridTextColumn>
+				<DataGridTextColumn FontFamily="MS Outlook" Header="密码" Binding="{Binding userpwd}"></DataGridTextColumn>
+				<DataGridTextColumn Header="每日填报状态" Binding="{Binding LatestResult_Daily, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTextColumn Header="晨检状态" Binding="{Binding LatestResult_Morning, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTextColumn Header="午检状态" Binding="{Binding LatestResult_Moon, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTextColumn Header="晚检状态" Binding="{Binding LatestResult_Night, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTemplateColumn Header="自动晨检">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding AutoMorning, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="自动午检">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding AutoMoon, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="自动晚检">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding AutoNight, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="暂停">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Skip, UpdateSourceTrigger=PropertyChanged}" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="每日填报Payload" Binding="{Binding Payload1}"></DataGridTextColumn>
+				<DataGridTextColumn Header="晨午晚检Payload" Binding="{Binding Payload2}"></DataGridTextColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Label Content="每天0点左右自动每日填报和晨检，12:02自动午检，18:02自动晚检" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top"/>
+		<Button Content="导出" Margin="0,10,10,0" HorizontalAlignment="Right" Width="87" Height="33" VerticalAlignment="Top" Click="Button_Click"/>
+		<Label Content="勾选自动晨/午/晚检才会在指定时间自动填报信息！" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" Foreground="#FFD85555"/>
+	</Grid>
 </Window>
